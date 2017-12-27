@@ -14,5 +14,5 @@ func Replace(res *http.Response) io.ReadCloser {
 	doc.Find("div#sidebar").Remove()
 
 	r, _ := doc.Html()
-  return ioutil.NopCloser(bytes.NewBufferString(r))
+	return ioutil.NopCloser(bytes.NewBufferString(r))
 }
