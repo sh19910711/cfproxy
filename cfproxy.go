@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"github.com/elazarl/goproxy"
 	"net/http"
 	"os"
@@ -8,6 +9,9 @@ import (
 )
 
 func main() {
+	templatePath := *flag.String("template", "template.cpp", "path/to/template.cpp")
+	flag.Parse()
+
 	proxy := goproxy.NewProxyHttpServer()
 	proxy.Verbose = true
 
@@ -19,9 +23,8 @@ func main() {
 
 	proxy.OnResponse(goproxy.UrlMatches(regexp.MustCompile("/submit$"))).DoFunc(
 		func(res *http.Response, ctxt *goproxy.ProxyCtx) *http.Response {
-			template := "./template"
-			if _, err := os.Stat(template); err == nil {
-				res.Body = ReplaceSourceCode(res, template)
+			if _, err := os.Stat(templatePath); err == nil {
+				res.Body = ReplaceSourceCode(res, templatePath)
 			}
 			return res
 		})
