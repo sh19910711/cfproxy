@@ -12,6 +12,13 @@ func Replace(res *http.Response) io.ReadCloser {
 	doc, _ := goquery.NewDocumentFromResponse(res)
 
 	doc.Find("div#sidebar").Remove()
+	doc.Find(".menu-list-container form").Remove()
+	doc.Find(".roundbox-lt").Remove()
+	doc.Find(".roundbox-rt").Remove()
+	doc.Find(".roundbox-lb").Remove()
+	doc.Find(".roundbox-rb").Remove()
+	doc.Find(".header-bell").Remove()
+	doc.Find(".side-bell").Remove()
 
 	doc.Find(".second-level-menu-list").Children().Each(func(_ int, el *goquery.Selection) {
 		html, _ := el.Html()
