@@ -11,7 +11,10 @@ import (
 func Replace(res *http.Response) io.ReadCloser {
 	doc, _ := goquery.NewDocumentFromResponse(res)
 
-	doc.Find("div#sidebar").Remove()
+	doc.Find("script").Remove()
+	doc.Find("style").Remove()
+	doc.Find("link").Remove()
+	doc.Find("#sidebar").Remove()
 	doc.Find(".menu-list-container form").Remove()
 	doc.Find(".roundbox-lt").Remove()
 	doc.Find(".roundbox-rt").Remove()
