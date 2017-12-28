@@ -3,14 +3,17 @@ package main
 import (
 	"flag"
 	"github.com/elazarl/goproxy"
+	"log"
 	"net/http"
 	"os"
 	"regexp"
 )
 
 func main() {
-	templatePath := *flag.String("template", "template.cpp", "path/to/template.cpp")
+	var templatePath string
+	flag.StringVar(&templatePath, "template", "template.cpp", "path/to/template.cpp")
 	flag.Parse()
+	log.Print("template: " + templatePath)
 
 	proxy := goproxy.NewProxyHttpServer()
 	proxy.Verbose = true
