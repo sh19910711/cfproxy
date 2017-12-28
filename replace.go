@@ -20,14 +20,16 @@ func Replace(res *http.Response) io.ReadCloser {
 	doc.Find(".header-bell").Remove()
 	doc.Find(".side-bell").Remove()
 
-	doc.Find(".second-level-menu-list").Children().Each(func(_ int, el *goquery.Selection) {
-		html, _ := el.Html()
-		doc.Find("body").PrependHtml(html + " / ")
-	}).Remove()
-
+	doc.Find("body").PrependHtml("<div id=\"cfproxy-header\"></div>")
+	header := doc.Find("#cfproxy-header")
 	doc.Find(".main-menu-list").Children().Each(func(_ int, el *goquery.Selection) {
 		html, _ := el.Html()
-		doc.Find("body").PrependHtml(html + " / ")
+		header.AppendHtml(html + " / ")
+	}).Remove()
+	header.AppendHtml("<hr>")
+	doc.Find(".second-level-menu-list").Children().Each(func(_ int, el *goquery.Selection) {
+		html, _ := el.Html()
+		header.AppendHtml(html + " / ")
 	}).Remove()
 
 	r, _ := doc.Html()
