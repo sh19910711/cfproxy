@@ -24,7 +24,7 @@ func main() {
 			return res
 		})
 
-	proxy.OnResponse(goproxy.UrlMatches(regexp.MustCompile("/submit$"))).DoFunc(
+	proxy.OnResponse(goproxy.UrlMatches(regexp.MustCompile("/submit"))).DoFunc(
 		func(res *http.Response, ctxt *goproxy.ProxyCtx) *http.Response {
 			if _, err := os.Stat(templatePath); err == nil {
 				res.Body = ReplaceSourceCode(res, templatePath)
