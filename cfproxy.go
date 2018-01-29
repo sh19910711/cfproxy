@@ -32,5 +32,6 @@ func main() {
 			return res
 		})
 
+	log.Print("listen on localhost:8181")
 	http.ListenAndServe("localhost:8181", proxy)
 }
