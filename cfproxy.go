@@ -25,10 +25,16 @@ func main() {
 		})
 
 	proxy.OnResponse(goproxy.UrlMatches(regexp.MustCompile("/submit"))).DoFunc(
-		func(res *http.Response, ctxt *goproxy.ProxyCtx) *http.Response {
+		func(res *http.Response, ctx *goproxy.ProxyCtx) *http.Response {
 			if _, err := os.Stat(templatePath); err == nil {
 				res.Body = ReplaceSourceCode(res, templatePath)
 			}
+			return res
+		})
+
+	proxy.OnResponse(goproxy.UrlMatches(regexp.MustCompile("/enter"))).DoFunc(
+		func(res *http.Response, ctx *goproxy.ProxyCtx) *http.Response {
+			res.Body = ReplaceEnter(res)
 			return res
 		})
 

@@ -6,7 +6,17 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
+
+func ReplaceEnter(res *http.Response) io.ReadCloser {
+	doc, _ := goquery.NewDocumentFromResponse(res)
+	doc.Find("#handleOrEmail").SetAttr("value", os.Getenv("CODEFORCES_USER"))
+	doc.Find("#password").SetAttr("value", os.Getenv("CODEFORCES_PASSWORD"))
+
+	r, _ := doc.Html()
+	return ioutil.NopCloser(bytes.NewBufferString(r))
+}
 
 func Replace(res *http.Response) io.ReadCloser {
 	doc, _ := goquery.NewDocumentFromResponse(res)
