@@ -52,7 +52,7 @@ func Replace(res *http.Response) io.ReadCloser {
 func ReplaceSourceCode(res *http.Response, path string) io.ReadCloser {
 	doc, _ := goquery.NewDocumentFromResponse(res)
 
-	content, _ := doc.Find("#pageContent form").Html()
+	content, _ := doc.Find("#pageContent").Html()
 	doc.Find("body").Remove()
 	doc.AppendHtml(content)
 
